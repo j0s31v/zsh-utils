@@ -5,39 +5,47 @@ export ZSH_UTILS_VERSION='0.1.0'
 # -----------------------------------------------------------------
     
 # System
-alias .='cd .'
+alias cd..='cd ..'
 alias ..='cd ..'
-alias ...='cd ...'
-alias ....='cd ....'
-alias .....='cd .....'
-alias ......='cd ......'
-#alias ls='ls --color=auto'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..' 
+alias ls='ls --color=auto'
 alias ls='ls -hF --color=auto'
-alias lr='ls -R'                    # recursive ls
+alias lr='ls -R'       
 alias ll='ls -alh'
 alias la='ll -A'
 alias lm='la | less'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias mkdir='mkdir -pv'
+alias rm='rm -I --preserve-root'
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+alias mkdir='mkdir -p -v'
+alias rmf='rm -f'
+alias rmdf='rm -rf'
+alias more='less'
+alias nano='nano -w'
+alias wget='wget -c'
+alias df='df -h'
+alias diff='colordiff'
+alias du='du -c -h'
+alias free='free -m'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
 alias grep='grep --color=auto'
 alias ngrep='grep -n'
 alias rgrep='grep -R'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias dir='dir --color=auto'
-alias vdir='vdir --color=auto'
-alias df='df -h'
-alias diff='colordiff'              # requires colordiff package
-alias du='du -c -h'
-alias free='free -m'                # show sizes in MB
-alias mkdir='mkdir -p -v'
-alias more='less'
-alias nano='nano -w'
-alias ping='ping -c 5'
-alias wget='wget -c'
-alias rmf='rm -f'
-alias rmdf='rm -rf'
 
 # Debian/Ubuntu
-alias sudo='sudo ' # Pass aliases to sudo
+alias sudo='sudo '
 alias install='sudo apt install'
 alias update='sudo apt update'
 alias upgrade='sudo apt upgrade'
@@ -46,6 +54,22 @@ alias scat='sudo cat'
 alias root='sudo su'
 alias reboot='sudo reboot'
 alias halt='sudo halt'
+alias poweroff='sudo poweroff'
+alias shutdown='sudo shutdown'
+alias root='sudo -i'
+alias su='sudo -i'
+alias meminfo='free -m -l -t'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias cpuinfo='lscpu'
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+#alias ping='ping -c 5'
+alias fastping='ping -c 100 -s.2'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
 
 # Systemd
 alias start='sudo systemctl start'
@@ -59,12 +83,26 @@ alias ls-failed='sudo systemctl --failed'
 
 # Apps
 alias trc='transmission-remote-cli'
+alias edit='nano'
 
 # Misc
 alias x='extract'
 alias cls='clear'
 alias glt='git describe --tags `git rev-list --tags --max-count=1`'
 alias gclear='git branch | grep -v "master" | xargs git branch -D && git gc --aggressive'
+alias h='history'
+alias j='jobs -l'
+#alias backupNow='sh /path/to/my/backupscript.sh'
+#alias openports='netstat -nape --inet'
+#alias server1='ssh 192.168.1.102 -l pete'
+
+# To Edit
+alias zshrc="nano ~/.bashrc && source ~/.bashrc" 
+alias fstab="sudo nano /etc/fstab"
+alias crypttab="sudo nano /etc/crypttab"
+alias hosts="sudo nano /etc/hosts"
+alias grub="sudo nano /etc/default/grub"
+
 
 # -----------------------------------------------------------------
 # Functions
