@@ -3,7 +3,7 @@ export ZSH_UTILS_VERSION='0.1.0'
 # -----------------------------------------------------------------
 # Alias
 # -----------------------------------------------------------------
-
+    
 # System
 alias .='cd .'
 alias ..='cd ..'
@@ -11,11 +11,27 @@ alias ...='cd ...'
 alias ....='cd ....'
 alias .....='cd .....'
 alias ......='cd ......'
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
+alias ls='ls -hF --color=auto'
+alias lr='ls -R'                    # recursive ls
+alias ll='ls -alh'
+alias la='ll -A'
+alias lm='la | less'
 alias grep='grep --color=auto'
 alias ngrep='grep -n'
 alias rgrep='grep -R'
-alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias df='df -h'
+alias diff='colordiff'              # requires colordiff package
+alias du='du -c -h'
+alias free='free -m'                # show sizes in MB
+alias mkdir='mkdir -p -v'
+alias more='less'
+alias nano='nano -w'
+alias ping='ping -c 5'
 alias wget='wget -c'
 alias rmf='rm -f'
 alias rmdf='rm -rf'
@@ -26,6 +42,10 @@ alias install='sudo apt install'
 alias update='sudo apt update'
 alias upgrade='sudo apt upgrade'
 #alias dist-upgrade='sudo apt dist-upgrade'
+alias scat='sudo cat'
+alias root='sudo su'
+alias reboot='sudo reboot'
+alias halt='sudo halt'
 
 # Systemd
 alias start='sudo systemctl start'
@@ -148,6 +168,46 @@ function fe() {
 	find . -type f -iname '*'$1'*' -exec "${2:-file}" {} \;  ; 
 }
 
+function to_iso () {
+	if [[ $# == 0 || $1 == "--help" || $1 == "-h" ]]; then
+    echo -e "Converts raw, bin, cue, ccd, img, mdf, nrg cd/dvd image files to ISO image file.\nUsage: to_iso file1 file2..."
+    fi
+    
+    for i in $*; do
+    	if [[ ! -f "$i" ]]; then
+          	echo "'$i' is not a valid file; jumping it"
+        else
+        	echo -n "converting $i..."
+          	OUT=`echo $i | cut -d '.' -f 1`
+          	case $i in
+            		  *.raw ) bchunk -v $i $OUT.iso;; #raw=bin #*.cue #*.bin
+          		*.bin|*.cue ) bin2iso $i $OUT.iso;;
+          		*.ccd|*.img ) ccd2iso $i $OUT.iso;; #Clone CD images
+                	  *.mdf ) mdf2iso $i $OUT.iso;; #Alcohol images
+                	  *.nrg ) nrg2iso $i $OUT.iso;; #nero images
+                    	  * ) echo "to_iso don't know de extension of '$i'";;
+          	esac
+        	if [[ $? != 0 ]]; then
+        		echo -e "${R}ERROR!${W}"
+        	else
+        		echo -e "${G}done!${W}"
+        	fi
+        fi
+    done
+}
+
+function up() {
+	local d=""
+    limit=$1
+    for ((i=1 ; i <= limit ; i++)); do
+    	d=$d/..
+    done
+    d=$(echo $d | sed 's/^\///')
+    if [[ -z "$d" ]]; then
+		d=..
+    fi
+    cd $d
+}
 
 # -----------------------------------------------------------------
 # Bindings
