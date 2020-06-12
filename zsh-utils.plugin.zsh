@@ -101,6 +101,8 @@ function sys-snapshot () {
 	#npm list -g --depth=0 > ~/.backup/npm_packages || echo "npm failed"
 	#pip list > ~/.backup/pip_packages || echo "pip failed"
 	composer global show | cut -d ' ' -f1 > ~/.backup/composer_packages || echo "composer failed"
+	cat /etc/cron.d/crontab.work > ~/.backup/crontab-work
+	cat /etc/cron.d/crontab.user > ~/.backup/crontab-user
 }
 
 function sys-backup () {
